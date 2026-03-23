@@ -1,15 +1,65 @@
 @import "tailwindcss";
 
 @theme {
+  /* 🔤 Font */
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+  /* 🔵 Brand */
+  --color-primary: #1A5D96;
+  --color-primary-dark: #154e80;
+  --color-primary-light: #4a8fc0;
+
+  /* ⚪ Neutrales */
+  --color-bg: #f3f4f6;
+  --color-surface: #ffffff;
+  --color-muted: #f9fafb;
+
+  /* 🩶 Textos */
+  --color-text: #374151;
+  --color-text-light: #6b7280;
+
+  /* 🔘 Bordes */
+  --color-border: #e5e7eb;
 }
 
 html,
 body {
-  @apply bg-white dark:bg-gray-950;
+  @apply bg-[var(--color-bg)] text-[var(--color-text)];
 
   @media (prefers-color-scheme: dark) {
     color-scheme: dark;
   }
+}
+
+/* ── Inputs y selects pill ── */
+input,
+select,
+textarea {
+  color: var(--color-text);
+  background: var(--color-muted);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--color-text-light);
+  opacity: 1;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  background: var(--color-surface);
+  color: var(--color-text);
+  outline: none;
+  border-color: var(--color-primary) !important;
+}
+
+/* Evita el fondo azul del autofill del navegador */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--color-text);
+  -webkit-box-shadow: 0 0 0px 1000px var(--color-muted) inset;
+  transition: background-color 5000s ease-in-out 0s;
 }
