@@ -105,10 +105,12 @@ export default function LoginWeb() {
           ? "Buena"
           : "Fuerte";
 
-  const particles = Array.from({ length: 12 }, (_, i) => ({
-    delay: i * 0.5,
-    x: Math.round((i / 12) * 100),
-    size: 32 + (i % 4) * 20,
+  const particles = Array.from({ length: 16 }, (_, i) => ({
+    delay: Math.random() * 5, // delays aleatorios
+    x: Math.random() * 100, // posición horizontal random
+    size: 20 + Math.random() * 60, // tamaños variados
+    duration: 6 + Math.random() * 6, // velocidades distintas
+    opacity: 0.1 + Math.random() * 0.3, // transparencia variable
   }));
 
   return (
@@ -178,14 +180,92 @@ export default function LoginWeb() {
             LADO DERECHO — FORMULARIO
         ══════════════════════════════════════ */}
         <div className="flex flex-1 flex-col transition-all duration-700">
-          {/* Header mobile */}
-          <div className="lg:hidden flex justify-center pt-10 pb-4">
-            <img src={logo} alt="Logo" className="h-10" />
+          <div
+            className={`flex-shrink-0 text-white pt-14 pb-10 px-6 rounded-b-[40px] transition-all duration-700 relative overflow-hidden branding-overlay lg:hidden`}
+          >
+            {/* Grid */}
+            <div className="absolute inset-0 grid-lines opacity-70" />
+
+            {/* Blobs dinámicos */}
+            <div
+              className={`absolute rounded-full bg-[var(--color-primary-light)]/20 blur-3xl transition-all duration-700 ${
+                tab === "register"
+                  ? "-top-10 -right-6 w-52 h-52 scale-125"
+                  : "-top-14 -right-10 w-44 h-44"
+              }`}
+            />
+            <div
+              className={`absolute rounded-full bg-white/5 blur-3xl transition-all duration-700 ${
+                tab === "register"
+                  ? "-bottom-6 left-4 w-32 h-32 scale-125"
+                  : "-bottom-8 left-6 w-24 h-24"
+              }`}
+            />
+            <div
+              className={`absolute rounded-full blur-2xl transition-all duration-700 ${
+                tab === "register"
+                  ? "top-8 left-16 w-20 h-20 bg-[var(--color-primary-light)]/40 scale-150"
+                  : "top-6 left-14 w-14 h-14 bg-[var(--color-primary-light)]/30"
+              }`}
+            />
+
+            {/* Glow central tipo desktop */}
+            <div
+              className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl transition-all duration-1000 ${
+                tab === "register"
+                  ? "w-52 h-52 bg-[var(--color-primary-light)]/20 scale-125"
+                  : "w-40 h-40 bg-white/10 scale-100"
+              }`}
+            />
+
+            {/* Partículas (LA MAGIA) */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+              {particles.map((p, i) => (
+                <div
+                  key={i}
+                  className="absolute bottom-0 rounded-full animate-float-up"
+                  style={{
+                    left: `${p.x}%`,
+                    width: p.size,
+                    height: p.size,
+                    animationDelay: `${p.delay}s`,
+                    animationDuration: `${p.duration}s`,
+                    opacity: p.opacity,
+                    filter: `blur(${p.size > 40 ? 3 : 1}px)`,
+                    background:
+                      "radial-gradient(circle, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.05) 60%, transparent 100%)",
+                  }}
+                />
+              ))}
+            </div>
+
+            {/* Contenido */}
+            <div className="flex flex-col items-center text-center relative z-10">
+              <img
+                src={logo}
+                alt="Logo"
+                className={`h-12 mb-1 brightness-0 invert transition-transform duration-500 ${
+                  tab === "login" ? "scale-100" : "scale-110"
+                }`}
+              />
+
+              <div key={tab} className="mt-3 animate-fadeUp">
+                <h1 className="text-2xl font-extrabold tracking-tight">
+                  {tab === "login" ? "¡Bienvenido de nuevo!" : "¡Únete ahora!"}
+                </h1>
+
+                <p className="text-sm text-white/70 mt-1 max-w-xs">
+                  {tab === "login"
+                    ? "Accede a todos tus servicios de forma rápida y segura."
+                    : "Crea tu cuenta en menos de 2 minutos y empieza ya."}
+                </p>
+              </div>
+            </div>
           </div>
 
           {/* Área scrollable del formulario */}
-          <div className="flex-1 flex items-center justify-center px-8 py-10 overflow-y-auto">
-            <div className="w-full max-w-lg">
+          <div className="flex-1 flex justify-center px-4 sm:px-8 py-6 overflow-hidden">
+            <div className="w-full max-w-lg flex flex-col h-full">
               {/* Título */}
               <div key={`title-${tab}`} className="mb-7 animate-fade-up">
                 <h2 className="text-2xl font-extrabold text-[var(--color-text)] tracking-tight">
@@ -201,17 +281,18 @@ export default function LoginWeb() {
               {/* ── TABS — barra con indicador deslizante ── */}
               {/* position:relative + overflow:hidden para que el indicador quede contenido */}
               <div
-                className="relative flex bg-[var(--color-muted)] rounded-full p-1 mb-8 border border-[var(--color-border)] overflow-hidden"
+                className="relative grid grid-cols-2 bg-[var(--color-muted)] rounded-full p-1 mb-4 border border-[var(--color-border)] overflow-hidden"
                 style={{ isolation: "isolate" }}
               >
-                {/* Indicador pill que se desliza de un lado al otro */}
+                {/* Indicador pill que se desliza */}
                 <div
-                  className="tab-indicator absolute top-1 bottom-1 w-[calc(50%-4px)] rounded-full bg-[var(--color-primary)] shadow-md"
+                  className="absolute top-1 bottom-1 w-[calc(50%-4px)] rounded-full bg-[var(--color-primary)] shadow-md transition-all duration-300 ease-in-out"
                   style={{
+                    left: "4px",
                     transform:
-                      tab === "login"
-                        ? "translateX(4px)"
-                        : "translateX(calc(100% + 4px))",
+                      tab === "register"
+                        ? "translateX(100%)"
+                        : "translateX(0%)",
                   }}
                 />
                 {(["login", "register"] as Tab[]).map((t) => (
@@ -258,21 +339,6 @@ export default function LoginWeb() {
                       <input
                         type="text"
                         placeholder="Ej. 1020304050"
-                        className={inputWithIcon}
-                      />
-                    </div>
-                  </div>
-
-                  {/* Email */}
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-[var(--color-text-light)] mb-1.5">
-                      Correo electrónico
-                    </label>
-                    <div className="relative">
-                      <FiMail className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--color-primary-light)] pointer-events-none" />
-                      <input
-                        type="email"
-                        placeholder="tucorreo@mail.com"
                         className={inputWithIcon}
                       />
                     </div>
@@ -384,7 +450,7 @@ export default function LoginWeb() {
                   </div>
 
                   {/* Nombres — 2 columnas */}
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                       <label className="block text-xs font-bold uppercase tracking-wider text-[var(--color-text-light)] mb-1.5">
                         Primer nombre
@@ -429,7 +495,7 @@ export default function LoginWeb() {
                   </div>
 
                   {/* Contacto — 2 columnas */}
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                       <label className="block text-xs font-bold uppercase tracking-wider text-[var(--color-text-light)] mb-1.5">
                         Correo electrónico
@@ -467,7 +533,7 @@ export default function LoginWeb() {
                   </div>
 
                   {/* Contraseñas — 2 columnas */}
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                       <label className="block text-xs font-bold uppercase tracking-wider text-[var(--color-text-light)] mb-1.5">
                         Contraseña
