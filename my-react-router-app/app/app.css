@@ -63,3 +63,159 @@ input:-webkit-autofill:focus {
   -webkit-box-shadow: 0 0 0px 1000px var(--color-muted) inset;
   transition: background-color 5000s ease-in-out 0s;
 }
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeUp {
+  animation: fadeUp 0.4s ease;
+}
+
+        @keyframes float-up {
+          0%   { transform: translateY(0) scale(1);   opacity: 0.15; }
+          50%  { opacity: 0.25; }
+          100% { transform: translateY(-100vh) scale(0.4); opacity: 0; }
+        }
+
+        /* ── TRANSICIÓN PRINCIPAL: emerge desde debajo de la barra ── */
+        @keyframes emerge-from-tab {
+          0%   {
+            opacity: 0;
+            transform: translateY(-18px) scaleY(0.92) scaleX(0.97);
+            transform-origin: top center;
+            clip-path: inset(0 0 100% 0 round 12px);
+            filter: blur(4px);
+          }
+          40%  {
+            opacity: 0.7;
+            clip-path: inset(0 0 20% 0 round 12px);
+            filter: blur(1px);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0) scaleY(1) scaleX(1);
+            clip-path: inset(0 0 0% 0 round 12px);
+            filter: blur(0px);
+          }
+        }
+
+        /* Salida: se pliega hacia arriba, como si volviera a la barra */
+        @keyframes fold-into-tab {
+          0%   {
+            opacity: 1;
+            transform: translateY(0) scaleY(1);
+            transform-origin: top center;
+            clip-path: inset(0 0 0% 0 round 12px);
+            filter: blur(0px);
+          }
+          100% {
+            opacity: 0;
+            transform: translateY(-14px) scaleY(0.88);
+            clip-path: inset(0 0 100% 0 round 12px);
+            filter: blur(3px);
+          }
+        }
+
+        /* Stagger para cada campo del formulario */
+        @keyframes field-in {
+          from { opacity: 0; transform: translateY(10px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fade-up {
+          from { opacity: 0; transform: translateY(12px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes shimmer {
+          0%   { background-position: -200% center; }
+          100% { background-position: 200% center; }
+        }
+        @keyframes bounce-in {
+          0%   { transform: scale(0.3); opacity: 0; }
+          50%  { transform: scale(1.1); }
+          100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Barra informativa: desliza desde arriba (login) o desde abajo (register) */
+        @keyframes info-bar-down {
+          from { opacity: 0; transform: translateY(-24px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes info-bar-up {
+          from { opacity: 0; transform: translateY(24px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-float-up   { animation: float-up linear infinite; }
+        .animate-fade-up    { animation: fade-up 0.4s ease both; }
+        .animate-bounce-in  { animation: bounce-in 0.5s cubic-bezier(0.34,1.56,0.64,1) both; }
+
+        /* Formulario completo emerge desde la barra de tabs */
+        .form-emerge {
+          animation: emerge-from-tab 0.62s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        /* Cada campo aparece escalonado */
+        .form-emerge > * {
+          animation: field-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+        .form-emerge > *:nth-child(1)  { animation-delay: 0.08s; }
+        .form-emerge > *:nth-child(2)  { animation-delay: 0.13s; }
+        .form-emerge > *:nth-child(3)  { animation-delay: 0.18s; }
+        .form-emerge > *:nth-child(4)  { animation-delay: 0.22s; }
+        .form-emerge > *:nth-child(5)  { animation-delay: 0.26s; }
+        .form-emerge > *:nth-child(6)  { animation-delay: 0.29s; }
+        .form-emerge > *:nth-child(7)  { animation-delay: 0.32s; }
+        .form-emerge > *:nth-child(8)  { animation-delay: 0.34s; }
+
+        /* Barra informativa izquierda */
+        .info-bar-login    { animation: info-bar-down 0.5s cubic-bezier(0.22,1,0.36,1) both; }
+        .info-bar-register { animation: info-bar-up   0.5s cubic-bezier(0.22,1,0.36,1) both; }
+
+        .btn-shimmer {
+          background: linear-gradient(
+            90deg,
+            var(--color-primary) 0%,
+            var(--color-primary-light) 50%,
+            var(--color-primary) 100%
+          );
+          background-size: 200% auto;
+        }
+        .btn-shimmer:hover { animation: shimmer 1.5s linear infinite; }
+
+        .branding-overlay {
+          background: linear-gradient(
+            135deg,
+            var(--color-primary) 0%,
+            var(--color-primary-dark) 40%,
+            #0d3d64 100%
+          );
+        }
+        .grid-lines {
+          background-image:
+            linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+          background-size: 40px 40px;
+        }
+
+        /* Tab pill: el indicador activo se mueve con transición suave */
+        .tab-indicator {
+          transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+                      width 0.3s ease;
+        }
+
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus {
+          -webkit-text-fill-color: var(--color-text);
+          -webkit-box-shadow: 0 0 0px 1000px var(--color-muted) inset;
+          transition: background-color 5000s ease-in-out 0s;
+        }
