@@ -7,7 +7,8 @@ import {
   FiMail,
   FiPhone,
 } from "react-icons/fi";
-import logo from "../assets/logo.jpg";
+import innova from "../assets/Portal_Pacientes.png";
+import logo from "../assets/Recurso1.png";
 
 /* ─────────────────────────────────────────
    Tipos
@@ -126,7 +127,6 @@ export default function LoginWeb() {
         <div className="hidden lg:flex relative flex-col justify-between w-[46%] branding-overlay text-white overflow-hidden transition-all duration-700">
           {/* Grid decorativo de fondo */}
           <div className="absolute inset-0 grid-lines" />
-
           {/* Círculos de fondo con blur */}
           <div className="absolute -top-24 -left-24 w-80 h-80 rounded-full bg-[var(--color-primary-light)]/20 blur-3xl" />
           <div className="absolute -bottom-32 -right-20 w-96 h-96 rounded-full bg-white/5 blur-3xl" />
@@ -137,40 +137,28 @@ export default function LoginWeb() {
                 : "bg-white/5 scale-100"
             }`}
           />
-
           {/* Partículas flotantes */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             {particles.map((p, i) => (
               <Particle key={i} {...p} />
             ))}
           </div>
+          <div className="relative z-10 flex flex-col justify-center h-full px-14 py-14 text-center">
+            {/* Logo */}
+            <div className="mb-10 flex justify-center">
+              <img src={logo} alt="Logo" className="h-64" />
+            </div>
 
-          {/* Contenido principal branding */}
-          <div className="relative z-10 flex flex-col items-start px-14 pt-14">
-            <img src={logo} alt="Logo" className="h-24 brightness-0 invert" />
-          </div>
-
-          <div className="relative z-10 flex-1 flex flex-col justify-center px-14">
-            {/* Barra informativa — cambia de posición según tab para efecto de desplazamiento */}
-            {/* En login: viene desde arriba. En register: viene desde abajo. */}
-            <div
-              key={`infobar-${tab}`}
-              className={
-                tab === "login" ? "info-bar-login" : "info-bar-register"
-              }
-            >
-              {/* Título */}
-              <h1 className="text-4xl font-extrabold leading-tight tracking-tight mb-2">
-                {tab === "login" ? (
-                  <>¡Bienvenido de nuevo!</>
-                ) : (
-                  <>¡Únete ahora!</>
-                )}
+            {/* Texto */}
+            <div className="flex flex-col items-center gap-4">
+              <h1 className="text-4xl font-extrabold leading-tight tracking-tight">
+                {tab === "login" ? "¡Bienvenido de nuevo!" : "¡Únete ahora!"}
               </h1>
-              <p className="text-base text-white/70 leading-relaxed max-w-xs">
+
+              <p className="text-xl text-white/70 leading-relaxed max-w-prose">
                 {tab === "login"
-                  ? "Accede a todos tus servicios en un solo lugar. Rápido, seguro y siempre disponible."
-                  : "Crea tu cuenta en menos de 2 minutos y empieza a gestionar todo desde un solo lugar."}
+                  ? "Tu salud, más cerca que nunca. Agenda citas, revisa tus exámenes y accede a tu información médica fácilmente."
+                  : "Crea tu cuenta y comienza a gestionar tus citas, resultados y toda tu información de salud en un solo lugar."}
               </p>
             </div>
           </div>
@@ -179,10 +167,18 @@ export default function LoginWeb() {
         {/* ══════════════════════════════════════
             LADO DERECHO — FORMULARIO
         ══════════════════════════════════════ */}
-        <div className="flex flex-1 flex-col transition-all duration-700">
+        <div className="flex flex-1 flex-col transition-all duration-700 sm:mt-32">
           <div
             className={`flex-shrink-0 text-white pt-14 pb-10 px-6 rounded-b-[40px] transition-all duration-700 relative overflow-hidden branding-overlay lg:hidden`}
           >
+            {/* Barra informativa — cambia de posición según tab para efecto de desplazamiento */}
+            {/* En login: viene desde arriba. En register: viene desde abajo. */}
+            <div
+              key={`infobar-${tab}`}
+              className={
+                tab === "login" ? "info-bar-login" : "info-bar-register"
+              }
+            ></div>
             {/* Grid */}
             <div className="absolute inset-0 grid-lines opacity-70" />
 
@@ -244,7 +240,7 @@ export default function LoginWeb() {
               <img
                 src={logo}
                 alt="Logo"
-                className={`h-12 mb-1 brightness-0 invert transition-transform duration-500 ${
+                className={`h-36 mb-1 transition-transform duration-500 ${
                   tab === "login" ? "scale-100" : "scale-110"
                 }`}
               />
@@ -256,8 +252,8 @@ export default function LoginWeb() {
 
                 <p className="text-sm text-white/70 mt-1 max-w-xs">
                   {tab === "login"
-                    ? "Accede a todos tus servicios de forma rápida y segura."
-                    : "Crea tu cuenta en menos de 2 minutos y empieza ya."}
+                    ? "Tu salud, más cerca que nunca. Agenda citas, revisa tus exámenes y accede a tu información médica fácilmente."
+                    : "Crea tu cuenta y comienza a gestionar tus citas, resultados y toda tu información de salud en un solo lugar."}
                 </p>
               </div>
             </div>
@@ -267,11 +263,14 @@ export default function LoginWeb() {
           <div className="flex-1 flex justify-center px-4 sm:px-8 py-6 overflow-hidden">
             <div className="w-full max-w-lg flex flex-col h-full">
               {/* Título */}
-              <div key={`title-${tab}`} className="mb-7 animate-fade-up">
-                <h2 className="text-2xl font-extrabold text-[var(--color-text)] tracking-tight">
+              <div
+                key={`title-${tab}`}
+                className="mb-5 animate-fade-up text-center"
+              >
+                <h2 className="text-2xl font-bold text-[var(--color-text)] tracking-tight">
                   {tab === "login" ? "Iniciar sesión" : "Crear cuenta"}
                 </h2>
-                <p className="text-sm text-[var(--color-text-light)] mt-1">
+                <p className="text-normal text-[var(--color-text-light)]">
                   {tab === "login"
                     ? "Ingresa tus credenciales para continuar"
                     : "Completa el formulario para registrarte"}
@@ -318,7 +317,7 @@ export default function LoginWeb() {
                 >
                   {/* Tipo documento */}
                   <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-[var(--color-text-light)] mb-1.5">
+                    <label className="text-xs font-bold uppercase tracking-wider text-[var(--color-text-light)] mb-1.5">
                       Tipo de documento
                     </label>
                     <select className={selectNoIcon}>
@@ -331,7 +330,7 @@ export default function LoginWeb() {
 
                   {/* Número documento */}
                   <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-[var(--color-text-light)] mb-1.5">
+                    <label className="text-xs font-bold uppercase tracking-wider text-[var(--color-text-light)] mb-1.5">
                       Número de documento
                     </label>
                     <div className="relative">
@@ -346,7 +345,7 @@ export default function LoginWeb() {
 
                   {/* Contraseña */}
                   <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-[var(--color-text-light)] mb-1.5">
+                    <label className="text-xs font-bold uppercase tracking-wider text-[var(--color-text-light)] mb-1.5">
                       Contraseña
                     </label>
                     <div className="relative">
@@ -419,6 +418,10 @@ export default function LoginWeb() {
                       <>Iniciar sesión</>
                     )}
                   </button>
+
+                  <div className="mb-10 flex justify-center">
+                    <img src={innova} alt="Logo" className="h-12" />
+                  </div>
                 </div>
               )}
 
@@ -452,7 +455,7 @@ export default function LoginWeb() {
                   {/* Nombres — 2 columnas */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-[var(--color-text-light)] mb-1.5">
+                      <label className=" text-xs font-bold uppercase tracking-wider text-[var(--color-text-light)] mb-1.5">
                         Primer nombre
                       </label>
                       <input
@@ -463,7 +466,7 @@ export default function LoginWeb() {
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-[var(--color-text-light)] mb-1.5">
+                      <label className=" text-xs font-bold uppercase tracking-wider text-[var(--color-text-light)] mb-1.5">
                         Segundo nombre
                       </label>
                       <input
@@ -473,7 +476,7 @@ export default function LoginWeb() {
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-[var(--color-text-light)] mb-1.5">
+                      <label className=" text-xs font-bold uppercase tracking-wider text-[var(--color-text-light)] mb-1.5">
                         Primer apellido
                       </label>
                       <input
@@ -483,7 +486,7 @@ export default function LoginWeb() {
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-[var(--color-text-light)] mb-1.5">
+                      <label className=" text-xs font-bold uppercase tracking-wider text-[var(--color-text-light)] mb-1.5">
                         Segundo apellido
                       </label>
                       <input
@@ -497,7 +500,7 @@ export default function LoginWeb() {
                   {/* Contacto — 2 columnas */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-[var(--color-text-light)] mb-1.5">
+                      <label className=" text-xs font-bold uppercase tracking-wider text-[var(--color-text-light)] mb-1.5">
                         Correo electrónico
                       </label>
                       <div className="relative">
@@ -514,7 +517,7 @@ export default function LoginWeb() {
                       </div>
                     </div>
                     <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-[var(--color-text-light)] mb-1.5">
+                      <label className=" text-xs font-bold uppercase tracking-wider text-[var(--color-text-light)] mb-1.5">
                         Celular
                       </label>
                       <div className="relative">
@@ -535,7 +538,7 @@ export default function LoginWeb() {
                   {/* Contraseñas — 2 columnas */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-[var(--color-text-light)] mb-1.5">
+                      <label className=" text-xs font-bold uppercase tracking-wider text-[var(--color-text-light)] mb-1.5">
                         Contraseña
                       </label>
                       <div className="relative">
@@ -586,7 +589,7 @@ export default function LoginWeb() {
                       )}
                     </div>
                     <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-[var(--color-text-light)] mb-1.5">
+                      <label className=" text-xs font-bold uppercase tracking-wider text-[var(--color-text-light)] mb-1.5">
                         Confirmar contraseña
                       </label>
                       <div className="relative">
@@ -646,6 +649,10 @@ export default function LoginWeb() {
                   >
                     Crear mi cuenta
                   </button>
+
+                  <div className="mb-10 flex justify-center">
+                    <img src={innova} alt="Logo" className="h-12" />
+                  </div>
                 </div>
               )}
             </div>
