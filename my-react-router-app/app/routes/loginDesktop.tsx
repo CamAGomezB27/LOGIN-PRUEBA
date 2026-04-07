@@ -43,20 +43,28 @@ function Particle({
   delay,
   x,
   size,
+  top,
+  duration,
+  opacity,
 }: {
   delay: number;
   x: number;
   size: number;
+  top: number;
+  duration: number;
+  opacity: number;
 }) {
   return (
     <div
-      className="absolute bottom-0 rounded-full bg-white/10 animate-float-up"
+      className="absolute rounded-full animate-float-up"
       style={{
         left: `${x}%`,
+        top: `${top}%`,
         width: size,
         height: size,
-        animationDelay: `${delay}s`,
-        animationDuration: `${6 + (delay % 3)}s`,
+        animationDelay: `-${Math.random() * duration}s`,
+        animationDuration: `${duration}s`,
+        opacity,
       }}
     />
   );
@@ -106,12 +114,13 @@ export default function LoginWeb() {
           ? "Buena"
           : "Fuerte";
 
-  const particles = Array.from({ length: 16 }, (_, i) => ({
-    delay: Math.random() * 5, // delays aleatorios
-    x: Math.random() * 100, // posición horizontal random
-    size: 20 + Math.random() * 60, // tamaños variados
-    duration: 6 + Math.random() * 6, // velocidades distintas
-    opacity: 0.1 + Math.random() * 0.3, // transparencia variable
+  const particles = Array.from({ length: 16 }, () => ({
+    delay: Math.random() * 5,
+    x: Math.random() * 100,
+    top: Math.random() * 100, // 👈 usa "top", no "y"
+    size: 20 + Math.random() * 60,
+    duration: 6 + Math.random() * 6,
+    opacity: 0.1 + Math.random() * 0.3,
   }));
 
   return (
@@ -140,7 +149,22 @@ export default function LoginWeb() {
           {/* Partículas flotantes */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             {particles.map((p, i) => (
-              <Particle key={i} {...p} />
+              <div
+                key={i}
+                className="absolute rounded-full animate-float-up"
+                style={{
+                  left: `${p.x}%`,
+                  top: `${p.top}%`, // 👈 AQUÍ está la magia
+                  width: p.size,
+                  height: p.size,
+                  animationDelay: `-${Math.random() * p.duration}s`, // 👈 mejor UX
+                  animationDuration: `${p.duration}s`,
+                  opacity: p.opacity,
+                  filter: `blur(${p.size > 40 ? 3 : 1}px)`,
+                  background:
+                    "radial-gradient(circle, rgba(255,255,255,0.25) 100%, rgba(255,255,255,0.05) 40%, transparent 100%)",
+                }}
+              />
             ))}
           </div>
           <div className="relative z-10 flex flex-col justify-center h-full px-14 py-14 text-center">
@@ -219,17 +243,18 @@ export default function LoginWeb() {
               {particles.map((p, i) => (
                 <div
                   key={i}
-                  className="absolute bottom-0 rounded-full animate-float-up"
+                  className="absolute rounded-full animate-float-up"
                   style={{
                     left: `${p.x}%`,
+                    top: `${p.top}%`, // 👈 AQUÍ está la magia
                     width: p.size,
                     height: p.size,
-                    animationDelay: `${p.delay}s`,
+                    animationDelay: `-${Math.random() * p.duration}s`, // 👈 mejor UX
                     animationDuration: `${p.duration}s`,
                     opacity: p.opacity,
                     filter: `blur(${p.size > 40 ? 3 : 1}px)`,
                     background:
-                      "radial-gradient(circle, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.05) 60%, transparent 100%)",
+                      "radial-gradient(circle, rgba(255,255,255,0.25) 100%, rgba(255,255,255,0.05) 60%, transparent 100%)",
                   }}
                 />
               ))}
@@ -285,13 +310,9 @@ export default function LoginWeb() {
               >
                 {/* Indicador pill que se desliza */}
                 <div
-                  className="absolute top-1 bottom-1 w-[calc(50%-4px)] rounded-full bg-[var(--color-primary)] shadow-md transition-all duration-300 ease-in-out"
+                  className="absolute top-1 bottom-1 w-[calc(50%-6px)] rounded-full bg-[var(--color-primary)] shadow-md transition-all duration-300 ease-in-out"
                   style={{
-                    left: "4px",
-                    transform:
-                      tab === "register"
-                        ? "translateX(100%)"
-                        : "translateX(0%)",
+                    left: tab === "login" ? "4px" : "calc(50% + 2px)",
                   }}
                 />
                 {(["login", "register"] as Tab[]).map((t) => (
